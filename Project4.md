@@ -1,48 +1,61 @@
-# Project 4 - MEAN STACK DEPLOYMENT TO UBUNTU IN AWS
+# Project 4 - MEAN STACK DEPLOYMENT TO UBUNTU 18.04TLS IN AWS
 ## Task
-In this assignment we are going to implement a simple Book Register web form using MEAN stack.
+  Implement a simple Book Register web form using MEAN stack.
 
-Step 1: The first this is to Install NodeJs
+### Step 1: Install NodeJs
 
-Node.js is a JavaScript runtime built on Chrome’s V8 JavaScript engine. Node.js is used in this tutorial to set up the Express routes and AngularJS controllers.
+Node.js is a JavaScript runtime built on Chrome’s V8 JavaScript engine. Node.js is used  to set up the Express routes and AngularJS controllers.
 
 Update ubuntu
 
 `sudo apt update`
+
 ![update](./images/sudo-update.png)
 
 Upgrade ubuntu
 
 `sudo apt upgrade`
+
 ![upgrade](./images/sudo-upgrade1.png)
+
+Type "yes" to continue
 
 ![upgrade2](./images/sudo-upgrade2.png)
 
 ### Add certificates
 
 `sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates`
+
 ![inst](./images/add-cert.png)
 
 `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
+
 ![nou](./images/cur1.png)
+
+
 ![sou2](./images/curl2.png)
 
- Install NodeJS
+ Next we Install NodeJS
 
 `sudo apt install -y nodejs`
 
 ![nojs](./images/nojs.png)
 
+
 ![nojsd](./images/nojs2.png)
 
 
-## Step 2: Install MongoDB
+## Step 2: Installing MongoDB
 MongoDB stores data in flexible, JSON-like documents. Fields in a database can vary from document to document and data structure can be changed over time. For our example application, we are adding book records to MongoDB that contain book name, isbn number, author, and number of pages.
 mages/WebConsole.gif
+
+We add the MangoDB keyserver
 
 `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6`
 
 ![key](./images/sudo-apt-key.png)
+
+Add the repository 
 
 `echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list`
 
@@ -54,12 +67,12 @@ Install MongoDB
 
 ![inst-Mongo](./images/mongodb-ins.png)
 
-Start The server
+After installing MongoDB we start The server to besure it properly install.
 
 `sudo service mongodb start`
 
 
-Verify that the service is up and running
+Verify that the service is up and running.
 
 `sudo systemctl status mongodb`
 
@@ -79,17 +92,21 @@ We need ‘body-parser’ package to help us process JSON files passed in reques
 
 ![body](./images/body-parser.png)
 
-Create a folder named ‘Books’
+we need to Create a folder named ‘Books’
 
 `mkdir Books && cd Books`
 
-In the Books directory, Initialize npm project
+In the Books directory,we also Initialize npm project
 
 `npm init`
 
 ![int](./images/creat.png)
 
 Add a file to it named server.js
+
+`touch server.js`
+
+We then edit the server.js file.
 
 `vi server.js`
 
@@ -111,27 +128,30 @@ app.listen(app.get('port'), function() {
 
 }
 ````
+Save and exit
+
 ![cp](./images/serverjs.png)
 
 ### Step 3: Install Express and set up routes to the server
 
 Express is a minimal and flexible Node.js web application framework that provides features for web and mobile applications. We will use Express in to pass book information to and from our MongoDB database.
 
-We also will use Mongoose package which provides a straight-forward, schema-based solution to model your application data. We will use Mongoose to establish a schema for the database to store data of our book register.
+We also will use Mongoose package which provides a straight-forward, schema-based solution to model our application data. We will use Mongoose to establish a schema for the database to store data of our book register.
 
 `sudo npm install express mongoose`
 
 ![expre](./images/mangoo-inst.png)
 
-We will create a folder named apps in the BOOKs' Folder.
+We then create a folder named apps inside the BOOKs' Folder.
 
 `mkdir apps && cd apps`
 
-we create a file name routes.js  inside the apps folder.
+we also create a file name routes.js  inside the apps folder.After creating ,we need to open and edit the routes.js file.
 
 `vi routes.js`
 
 ![routes](./images/cre-book.png)
+
 copy and paste the code below into routes.js
 
 ```{
@@ -175,6 +195,7 @@ module.exports = function(app) {
 
 }
 ```
+Save  and Exit
 
 ![copyied](./images/paste.png)
 
@@ -182,12 +203,17 @@ In the ‘apps’ folder, create a folder named models
 
 `mkdir models && cd models`
 
-Create a file named book.js
+Create a file named book.js inside the models folder. We also need to open and  edit the book.js file.
 
 `vi book.js`
 
-Copy and paste the code below into ‘book.js’
+
 ![bkjs](./images/book.png)
+
+
+Copy and paste the code below into ‘book.js’ 
+
+
 ```
 {
 var mongoose = require('mongoose');
@@ -205,6 +231,8 @@ var Book = mongoose.model('Book', bookSchema);
 module.exports = mongoose.model('Book', bookSchema);
 }
 ```
+Save and Exit.
+
 ![editbook](./images/book-edit.png)
 
 ### Step 4 – Access the routes with AngularJS
@@ -214,11 +242,11 @@ Change the directory back to ‘Books’
 
 `cd ../..`
 
-Create a folder named public
+Create a folder named public 
 
 `mkdir public && cd public`
 
-Add a file named script.js
+Add a file named script.js , open and edit
 
 `vi script.js`
 
@@ -264,12 +292,13 @@ app.controller('myCtrl', function($scope, $http) {
     });
   };
 });
-
 }
 ```
+Save and exit after pasting.
+
 ![paste1](./images/index.js-edited.png)
 
-In public folder, create a file named index.html;
+Create a file named index.html inside the public folder,Open and edit the file.
 
 `vi index.html`
 
@@ -343,17 +372,20 @@ Start the server by running this command:
 
 ![ser-run](./images/server-runing.png)
 
-The server is now up and running, we can connect it via port 3300. You can launch a separate Putty or SSH console to test what curl command returns locally.
+The server is now up and running, we can connect it via port 3300. We can launch a separate Putty or SSH console to test what curl command returns locally.
 
 curl -s http://localhost:3300
+
 It shall return an HTML page, it is hardly readable in the CLI, but we can also try and access it from the Internet.
 
 
-For this – you need to open TCP port 3300 in your AWS Web Console for your EC2 Instance.
+For this to work – We need to open TCP port 3300 in your AWS Web Console for your EC2 Instance.
 
 ![aws](./images/port3300.png)
 
-Using our Public IP Address
+
+We then use our Public IP Address
+
  http://18.170.88.69:3300
 
 ![uotput](./images/final%20output.png)
